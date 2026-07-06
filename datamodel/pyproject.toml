@@ -1,0 +1,9 @@
+[project]
+name = "nfdi4energy_simulation_scenario"
+version = "0.1.0"
+description = "LinkML data model for simulation scenarios"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "linkml>=1.11.0",
+]

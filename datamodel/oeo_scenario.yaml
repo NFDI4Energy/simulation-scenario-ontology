@@ -1,0 +1,90 @@
+id: https://openenergyplatform.org/ontology/oeo/
+name: oeo_simulation_scenario
+prefixes:
+  linkml: https://w3id.org/linkml/
+  oeo: https://openenergyplatform.org/ontology/oeo/
+imports:
+  # - linkml:types
+  - https://w3id.org/linkml/types
+default_prefix: oeo
+default_range: string
+
+classes:
+  SimulationConfiguration:
+    tree_root: true
+    class_uri: oeo:OEO_00420001
+    slots:
+      - id
+      - simulation_components
+      - has_simulation_connection
+  ScenarioParams:
+    class_uri: oeo:OEO_0042XXXX-scenario_parameter
+  SimulationComponent:
+    class_uri: oeo:OEO_00420006
+    slots:
+      - id
+      - init_params
+      - represents
+      - controls
+      - has_connection_port
+  SimulationConnectionPort:
+    class_uri: oeo:OEO_0042XXXX-simulation_connection_port
+    slots: has_simulation_connection
+  SimulationConnectionInputPort:
+    is_a: SimulationConnectionPort
+  SimulationConnectionOutputPort:
+    is_a: SimulationConnectionPort
+  SimulationConnection:
+    class_uri: oeo:OEO_0042XXXX-simulation_connection
+  MaterialArtifact:
+    class_uri: oeo:ont00000995
+  DeviceUnderTest:
+    class_uri: oeo:OEO_0042XXXX-device_under_test
+
+#
+#
+# Not really needed for schema?
+#
+#
+  SimulationModel:
+    class_uri: oeo:OEO_00000371
+    is_a: SimulationComponent
+  HardwareSimulationComponent:
+    class_uri: oeo:OEO_00420007
+    is_a: SimulationComponent
+
+slots:
+  id:
+    identifier: true
+    required: true
+    description:
+      identifier of an instance
+  simulation_components:
+    range: SimulationComponent
+    slot_uri: oeo:OEO_0042XXXX-simulators
+    multivalued: true
+    required: False
+    inlined: True
+  has_connection_port:
+    range: SimulationConnectionPort
+    slot_uri: oeo:OEO_0042XXXX-has_connection_port
+    multivalued: true
+    required: False
+  has_simulation_connection:
+    range: SimulationConnection
+    slot_uri: oeo:OEO_0042XXXX-has_simulation_connection
+    multivalued: true
+    required: False
+  init_params:
+    range: string
+    slot_uri: oeo:OEO_0042XXXX-init_Params
+    required: False
+    inlined: true
+  represents:
+    range: MaterialArtifact
+    slot_uri: oeo:ont00001938
+    required: False
+  controls:
+    range: MaterialArtifact
+    slot_uri: oeo:OEO_00420011
+    required: False
