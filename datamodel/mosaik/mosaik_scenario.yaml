@@ -1,0 +1,129 @@
+id: https://mosaik.offis.de/ont/testOnto
+name: mosaikTestScenario
+prefixes:
+  linkml: https://w3id.org/linkml/
+  mosaikScenario: https://mosaik.offis.de/ont/mosaikScenario/
+  oeo: https://openenergyplatform.org/ontology/oeo/
+imports:
+  # - linkml:types
+  - https://w3id.org/linkml/types
+default_prefix: mosaikScenario
+default_range: string
+
+classes:
+  Scenario:
+    tree_root: true
+    class_uri: oeo:OEO_00420001
+    slots:
+      - id
+      - simulators
+      - tesserae
+      - connections
+      - params
+  ScenarioParams:
+    class_uri: oeo:OEO_0042XXXX-Scenario_Parameter
+    slots:
+      - until
+      - rt_mode
+      - rt_factor
+      - rt_strict
+      - print_progress
+      - lazy_stepping
+  Simulator:
+    class_uri: oeo:OEO_00420003
+    slots:
+      - id
+#      - starter #(only string representation)
+      - init_params
+      - plugin_name
+#  PythonSimulator:
+#    is_a: Simulator
+#    attributes:
+#      import_string: string
+  Connection:
+    class_uri: oeo:OEO_0042XXXX-Connection
+    slots:
+      # source: TesseraId
+      # dest: TesseraId
+      # attr_pairs: list[tuple[str, str]]
+      - relation
+      # settings: dict[str, Any] = field(default_factory=dict)  # TODO: refine type
+#  EntitySource:
+#  CreateSource:
+#    is_a: EntitySource
+#  ChildrenSource:
+#    is_a: EntitySource
+  Relation:
+  EmptyRelation:
+    is_a: Relation
+  OneToOneRelation:
+    is_a: Relation
+  RandomRelation:
+    is_a: Relation
+  ManyToOneRelation:
+    is_a: Relation
+  ManualRelation:
+    is_a: Relation
+  Composition:
+    is_a: Relation
+
+slots:
+  id:
+    identifier: true
+    required: true
+    description:
+      identifier of an instance
+ # ScenarioParams
+  until:
+    range: integer
+    required: True
+  rt_mode:
+    range: boolean
+    required: True
+    ifabsent: False
+  rt_factor:
+    range: float
+    required: True
+    ifabsent: float(1.0)
+  rt_strict:
+    range: boolean
+    required: True
+    ifabsent: False
+  print_progress:
+    range: boolean
+    required: True
+    ifabsent: True
+  lazy_stepping:
+    range: boolean
+    required: True
+    ifabsent: True
+  simulators:
+    range: Simulator
+    slot_uri: oeo:OEO_0042XXXX-simulators
+    multivalued: true
+    required: True
+    inlined: True
+  tesserae:
+    range: integer
+  connections:
+    range: Connection
+    slot_uri: oeo:OEO_0042XXXX-connections
+    multivalued: true
+    required: True
+  params:
+    range: ScenarioParams
+    required: True
+  starter:
+    range: string
+  init_params:
+    range: string
+    slot_uri: oeo:OEO_0042XXXX-init_Params
+    required: True
+    inlined: true
+    #inlined_as_list: false
+#    multivalued: false
+    # key: True
+  plugin_name:
+    range: string
+  relation:
+    range: Relation
