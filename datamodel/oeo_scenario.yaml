@@ -17,7 +17,7 @@ classes:
       - id
       - simulation_components
       - has_simulation_connection
-  ScenarioParams:
+  ScenarioParameter:
     class_uri: oeo:OEO_0042XXXX-scenario_parameter
   SimulationComponent:
     class_uri: oeo:OEO_00420006
@@ -31,8 +31,10 @@ classes:
     class_uri: oeo:OEO_0042XXXX-simulation_connection_port
     slots: has_simulation_connection
   SimulationConnectionInputPort:
+    class_uri: oeo:OEO_0042XXXX-simulation_connection_input_port
     is_a: SimulationConnectionPort
   SimulationConnectionOutputPort:
+    class_uri: oeo:OEO_0042XXXX-simulation_connection_output_port
     is_a: SimulationConnectionPort
   SimulationConnection:
     class_uri: oeo:OEO_0042XXXX-simulation_connection
