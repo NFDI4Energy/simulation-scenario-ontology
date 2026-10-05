@@ -3,6 +3,7 @@ name: oeo_simulation_scenario
 prefixes:
   linkml: https://w3id.org/linkml/
   oeo: https://openenergyplatform.org/ontology/oeo/
+  bfo: http://purl.obolibrary.org/obo/
 imports:
   # - linkml:types
   - https://w3id.org/linkml/types
@@ -29,7 +30,8 @@ classes:
       - has_connection_port
   SimulationConnectionPort:
     class_uri: oeo:OEO_0042XXXX-simulation_connection_port
-    slots: has_simulation_connection
+    slots:
+      - has_simulation_connection
   SimulationConnectionInputPort:
     class_uri: oeo:OEO_0042XXXX-simulation_connection_input_port
     is_a: SimulationConnectionPort
@@ -42,15 +44,8 @@ classes:
     class_uri: oeo:ont00000995
   DeviceUnderTest:
     class_uri: oeo:OEO_0042XXXX-device_under_test
-
-#
-#
-# Not really needed for schema?
-#
-#
   SimulationModel:
     class_uri: oeo:OEO_00000371
-    is_a: SimulationComponent
   HardwareSimulationComponent:
     class_uri: oeo:OEO_00420007
     is_a: SimulationComponent
@@ -61,18 +56,25 @@ slots:
     required: true
     description:
       identifier of an instance
+  has_part:
+    slot_uri: bfo:BFO_0000051
+    multivalued: true
+    required: False
   simulation_components:
+    is_a: has_part
     range: SimulationComponent
     slot_uri: oeo:OEO_0042XXXX-simulators
     multivalued: true
     required: False
     inlined: True
   has_connection_port:
+    is_a: has_part
     range: SimulationConnectionPort
     slot_uri: oeo:OEO_0042XXXX-has_connection_port
     multivalued: true
     required: False
   has_simulation_connection:
+    is_a: has_part
     range: SimulationConnection
     slot_uri: oeo:OEO_0042XXXX-has_simulation_connection
     multivalued: true
