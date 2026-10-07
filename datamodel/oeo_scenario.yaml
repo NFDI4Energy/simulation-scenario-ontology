@@ -40,6 +40,8 @@ classes:
     is_a: SimulationConnectionPort
   SimulationConnection:
     class_uri: oeo:OEO_0042XXXX-simulation_connection
+    slots:
+      - has_message_modification
   MaterialArtifact:
     class_uri: oeo:ont00000995
   DeviceUnderTest:
@@ -49,6 +51,14 @@ classes:
   HardwareSimulationComponent:
     class_uri: oeo:OEO_00420007
     is_a: SimulationComponent
+  MessageSchema:
+    class_uri: oeo:OEO_0042XXXX-message_schema
+    slots:
+      - has_message_attribute
+  MessageAttribute:
+    class_uri: oeo:OEO_0042XXXX-message_attribute
+  MessageModification:
+    class_uri: oeo:OEO_0042XXXX-message_modification
 
 slots:
   id:
@@ -77,6 +87,18 @@ slots:
     is_a: has_part
     range: SimulationConnection
     slot_uri: oeo:OEO_0042XXXX-has_simulation_connection
+    multivalued: true
+    required: False
+  has_message_schema:
+    is_a: has_part
+    range: MessageSchema
+    slot_uri: oeo:OEO_0042XXXX-has_message_schema
+    multivalued: true
+    required: False
+  has_message_modification:
+    is_a: has_part
+    range: MessageModification
+    slot_uri: oeo:OEO_0042XXXX-has_message_modification
     multivalued: true
     required: False
   init_params:
