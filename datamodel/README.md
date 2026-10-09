@@ -35,14 +35,14 @@ detailed per-framework descriptions follow in each framework's own subdirectory.
 
 | Framework | Language  | Primary Use Case                                           | License |
 |-----------|-----------|------------------------------------------------------------|---------|
-| [mosaik](./mosaik/mosaik.md) | Python    | Time-stepped and event-based co-simulation for smart grids | LGPL-2.1 |
-| [DaceDSX](./dacedsx/dacedsx.md) | Java, C++, Python | Distributed, loosely-coupled simulation via Kafka          | MIT/Apache 2.0 |
-| [VILLAS](./villas/villas.md) | C/C++     | Real-time HiL/GD-RTS for power systems                     | Apache 2.0/GPLv3 |
+| [mosaik](mosaik/README.md) | Python    | Time-stepped and event-based co-simulation for smart grids | LGPL-2.1 |
+| [DaceDSX](dacedsx/README.md) | Java, C++, Python | Distributed, loosely-coupled simulation via Kafka          | MIT/Apache 2.0 |
+| [VILLAS](villas/README.md) | C/C++     | Real-time HiL/GD-RTS for power systems                     | Apache 2.0/GPLv3 |
 
 ### Comparison Table
 
-The following table summarizes the per-framework details in [`mosaik/mosaik.md`](./mosaik/mosaik.md),
-[`dacedsx/dacedsx.md`](./dacedsx/dacedsx.md) and [`villas/villas.md`](./villas/villas.md) by mapping
+The following table summarizes the per-framework details in [`mosaik/README.md`](mosaik/README.md),
+[`dacedsx/README.md`](dacedsx/README.md) and [`villas/README.md`](villas/README.md) by mapping
 common scenario concepts across the three frameworks.
 
 | # | Concept             | mosaik (Scenario API)                                                         | mosaik (Datamodel)                                                              | DaceDSX               | VILLAS |
