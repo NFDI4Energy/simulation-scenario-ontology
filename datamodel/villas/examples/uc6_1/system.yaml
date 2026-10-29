@@ -1,0 +1,64 @@
+servers:
+  - name: Workstation
+    hostname: elab-sl-004.clients.elab2.kit.edu
+    ip: '141.52.206.53'  # we might need to specify an ip for each network
+    user: KIT/iai-simlab-0001
+    password: null  # this is fetched from somewhere else if needed
+    software:
+      - python
+      - rscad
+  - name: Linux Server
+    hostname: elab-villas4.server.elab2.kit.edu
+    ip:
+      - '141.52.185.101'
+      - '172.21.63.224'
+      - '192.168.10.201'
+    user: null
+    password: null
+    software:
+      - python
+      - villas
+  - name: Workstation Opal
+    hostname: '???'
+    ip: '???'
+    user: null
+    password: null
+    software:
+      - rtlab
+      - matlab
+  - name: RTDS Rack 1
+    hostname: null
+    ip: 
+      - '172.21.63.201' # basic interface from RSCAD
+      - '172.21.63.202' # gtnetx2_skt on port 1
+      - '172.21.63.203' # gtnetx2_skt on port 2
+    user: null
+    password: null
+  - name: RTDS Rack 2
+    hostname: null
+    ip:
+      - '172.21.63.206' # basic interface from RSCAD
+      - '172.21.63.207' # gtnetx2_skt on port 1
+      - '172.21.63.208' # gtnetx2_skt on port 2
+    user: null
+    password: null
+  - name: RTDS Rack 3
+    hostname: null
+    ip:
+      - '172.21.63.211' # basic interface from RSCAD
+      # - '172.21.63.212' # gtnetx2_skt on port 1 - cannot be read from RSCAD
+      # - '172.21.63.213' # gtnetx2_skt on port 2 - cannot be read from RSCAD
+  # 172.21.63.216 is a novacor2.0 global bus hub
+  - name: Opal RT
+    hostname: null
+    ip: '172.21.63.222'
+networks:
+  - name: KIT
+    broadcast: '141.52.185.255'
+    subnet: '255.255.255.0'
+  - name: "?"
+    broadcast: '192.168.10.255'
+    subnet: '255.255.255.0'
+  - name: "EGSAL"
+    broadcast: '172.21.63.255'
+    subnet: '255.255.255.192'

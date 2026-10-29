@@ -15,6 +15,8 @@ In NFDI4Energy the focus lies on the co-simulation frameworks DaceDSX, VILLAS, a
 
 Thus, we will add instructions on how to use our developments with other frameworks here in the future.
 
+The documentation for adding a framework, including the per-framework details and the concept comparison table, is collected in the [datamodel README](./datamodel/README.md#co-simulation-framework-comparison).
+
 # List of existing ontologies
 
 As a first step towards developing the simulation scenario ontology, we reviewed existing ontologies and evaluated their relevance for definition of simulation scenarios.
