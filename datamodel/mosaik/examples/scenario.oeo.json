@@ -1,0 +1,638 @@
+{
+  "id": "mosaik-scenario",
+  "declaration_type": "Scenario",
+  "version": "1.0",
+  "mosaik_context": {
+    "@vocab": "https://mosaik.offis.de/mosaik/",
+    "oeo": "https://openenergyplatform.org/ontology/oeo/",
+    "Scenario": {
+      "@id": "oeo:OEO_00420001"
+    },
+    "Simulator": {
+      "@id": "oeo:OEO_00420006"
+    },
+    "Connection": {
+      "@id": "oeo:OEO_0042XXXX-simulation_connection"
+    },
+    "ScenarioParams": {
+      "@id": "oeo:OEO_0042XXXX-scenario_parameter"
+    }
+  },
+  "visuals": {
+    "simulators": {
+      "pandapower": {
+        "displayName": "pandapower"
+      },
+      "PV": {
+        "displayName": "PV"
+      },
+      "PVCtrl": {
+        "displayName": "PVCtrl"
+      },
+      "Weather": {
+        "displayName": "Weather"
+      },
+      "CSVWriter": {
+        "displayName": "CSV Writer"
+      },
+      "CSVReader": {
+        "displayName": "CSV Reader"
+      }
+    },
+    "tesserae": {
+      "grid": {
+        "displayName": "Grid",
+        "position": null,
+        "image": "grid.svg",
+        "bgColor": "#4c4c4c"
+      },
+      "buses": {
+        "displayName": "LV buses",
+        "position": {
+          "r": 0,
+          "s": 0
+        },
+        "image": "bus.svg",
+        "bgColor": "#4c4c4c"
+      },
+      "pvs": {
+        "displayName": "PV systems",
+        "position": {
+          "r": 1,
+          "s": 0
+        },
+        "image": "pv.svg",
+        "bgColor": "#5c8424"
+      },
+      "pv_ctrl": {
+        "displayName": "PV controller",
+        "position": {
+          "r": 2,
+          "s": 1
+        },
+        "image": "control_strategy.svg",
+        "bgColor": "#eec300"
+      },
+      "weather": {
+        "displayName": "Weather",
+        "position": {
+          "r": 1,
+          "s": -1
+        },
+        "image": "weather.svg",
+        "bgColor": "#385623"
+      },
+      "csv_writer": {
+        "displayName": "CSV Writer",
+        "position": null,
+        "image": "file.svg",
+        "bgColor": "#7f7f7f"
+      }
+    },
+    "connections": {
+      "conn_pv": {
+        "color": "#5c8424"
+      },
+      "conn_weather": {
+        "color": "#385623"
+      },
+      "conn_vm": {
+        "color": "#4c4c4c"
+      },
+      "conn_pv_ctrl": {
+        "color": "#eec300"
+      },
+      "conn_pv_log": {
+        "color": "#8B4513"
+      },
+      "conn_bus_log": {
+        "color": "#696969"
+      },
+      "conn_ctrl_log": {
+        "color": "#DAA520"
+      },
+      "conn_weather_log": {
+        "color": "#556B2F"
+      }
+    }
+  },
+  "params": {
+    "declaration_type": "ScenarioParams",
+    "until": 7200,
+    "rt_mode": false,
+    "rt_factor": 1,
+    "rt_strict": false,
+    "print_progress": false,
+    "lazy_stepping": false,
+    "extra": {
+      "@type": "oeo:OEO_0042XXXX-scenario_parameter"
+    }
+  },
+  "tesserae": {
+    "grid": {
+      "tid": "grid",
+      "declaration_type": "Tessera",
+      "simulator": "pandapower",
+      "model": "Grid",
+      "entity_sources": {
+        "grid-source": {
+          "esid": "grid-source",
+          "declaration_type": "CreateSource",
+          "num": 1,
+          "params": {
+            "simbench": "1-LV-rural1--0-no_sw"
+          },
+          "extra": {
+            "@type": "CreateSource"
+          }
+        }
+      },
+      "extra": {
+        "@type": "Tessera"
+      }
+    },
+    "buses": {
+      "tid": "buses",
+      "declaration_type": "Tessera",
+      "simulator": "pandapower",
+      "model": "Bus",
+      "entity_sources": {
+        "bus-source": {
+          "esid": "bus-source",
+          "declaration_type": "ChildrenSource",
+          "parent": "grid",
+          "filters": [
+            {
+              "declaration_type": "ExtraInfoFilter",
+              "key": "nominal voltage [kV]",
+              "value": 0.4,
+              "extra": {
+                "@type": "ExtraInfoFilter"
+              }
+            }
+          ],
+          "extra": {
+            "@type": "ChildrenSource"
+          }
+        }
+      },
+      "extra": {
+        "@type": "Tessera"
+      }
+    },
+    "pvs": {
+      "tid": "pvs",
+      "declaration_type": "Tessera",
+      "simulator": "PV",
+      "model": "PV",
+      "entity_sources": {
+        "pv-source": {
+          "esid": "pv-source",
+          "declaration_type": "CreateSource",
+          "num": {
+            "declaration_type": "FromTessera",
+            "tessera": "buses",
+            "extra": {
+              "@type": "FromTessera"
+            }
+          },
+          "params": {
+            "efficiency": 0.23,
+            "area": 100
+          },
+          "extra": {
+            "@type": "CreateSource"
+          }
+        }
+      },
+      "extra": {
+        "@type": "Tessera"
+      }
+    },
+    "pv_ctrl": {
+      "tid": "pv_ctrl",
+      "declaration_type": "Tessera",
+      "simulator": "PVCtrl",
+      "model": "Controller",
+      "entity_sources": {
+        "pv-ctrl-source": {
+          "esid": "pv-ctrl-source",
+          "declaration_type": "CreateSource",
+          "num": {
+            "declaration_type": "FromTessera",
+            "tessera": "pvs",
+            "extra": {
+              "@type": "FromTessera"
+            }
+          },
+          "params": {
+            "max_power": 0.03,
+            "threshold": 1.035,
+            "factor": 0.2
+          },
+          "extra": {
+            "@type": "CreateSource"
+          }
+        }
+      },
+      "extra": {
+        "@type": "Tessera"
+      }
+    },
+    "csv_writer": {
+      "tid": "csv_writer",
+      "declaration_type": "Tessera",
+      "simulator": "CSVWriter",
+      "model": "CSVWriter",
+      "entity_sources": {
+        "csv-writer-source": {
+          "esid": "csv-writer-source",
+          "declaration_type": "CreateSource",
+          "num": 1,
+          "params": {
+            "buff_size": 900
+          },
+          "extra": {
+            "@type": "CreateSource"
+          }
+        }
+      },
+      "extra": {
+        "@type": "Tessera"
+      }
+    },
+    "weather": {
+      "tid": "weather",
+      "declaration_type": "Tessera",
+      "simulator": "CSVReader",
+      "model": "Weather",
+      "entity_sources": {
+        "e656feb4-5627-4e3a-a782-c195493b0d59": {
+          "esid": "e656feb4-5627-4e3a-a782-c195493b0d59",
+          "declaration_type": "CreateSource",
+          "num": {
+            "declaration_type": "FromTessera",
+            "tessera": "pvs",
+            "extra": {
+              "@type": "FromTessera"
+            }
+          },
+          "params": {},
+          "extra": {
+            "@type": "CreateSource"
+          }
+        }
+      },
+      "extra": {
+        "@type": "Tessera"
+      }
+    }
+  },
+  "simulation_components": {
+    "pandapower": {
+      "id": "pandapower",
+      "sid": "pandapower",
+      "declaration_type": "Simulator",
+      "starter": "mosaik_components.pandapower:Simulator",
+      "plugin_name": "pandapower",
+      "mosaik_init_params": {
+        "step_size": 900
+      },
+      "extra": {
+        "@type": "oeo:OEO_00420006"
+      }
+    },
+    "PV": {
+      "id": "PV",
+      "sid": "PV",
+      "declaration_type": "Simulator",
+      "starter": "examples.mosaik_simple_pv:Simulator",
+      "plugin_name": "pv_simulator",
+      "mosaik_init_params": {
+        "step_size": 900,
+        "start_date": "2014-03-17 13:00:00"
+      },
+      "extra": {
+        "@type": "oeo:OEO_00420006"
+      }
+    },
+    "PVCtrl": {
+      "id": "PVCtrl",
+      "sid": "PVCtrl",
+      "declaration_type": "Simulator",
+      "starter": "examples.mosaik_pv_ctrl:Controller",
+      "plugin_name": "pv_ctrl",
+      "mosaik_init_params": {
+        "step_size": 900
+      },
+      "extra": {
+        "@type": "oeo:OEO_00420006"
+      }
+    },
+    "Weather": {
+      "id": "Weather",
+      "sid": "Weather",
+      "declaration_type": "Simulator",
+      "starter": "mosaik.basic_simulators:InputSimulator",
+      "plugin_name": "generic",
+      "mosaik_init_params": {
+        "step_size": 900
+      },
+      "extra": {
+        "@type": "oeo:OEO_00420006"
+      }
+    },
+    "CSVWriter": {
+      "id": "CSVWriter",
+      "sid": "CSVWriter",
+      "declaration_type": "Simulator",
+      "starter": "mosaik_csv_writer:CSVWriter",
+      "plugin_name": "csv_writer",
+      "mosaik_init_params": {
+        "start_date": "2014-03-17 13:00:00",
+        "date_format": "%Y-%m-%d %H:%M:%S",
+        "output_file": "results.csv"
+      },
+      "extra": {
+        "@type": "oeo:OEO_00420006"
+      }
+    },
+    "CSVReader": {
+      "id": "CSVReader",
+      "sid": "CSVReader",
+      "declaration_type": "Simulator",
+      "starter": "mosaik_csv:CSV",
+      "plugin_name": "csv_reader",
+      "mosaik_init_params": {
+        "sim_start": "2014-03-17 13:00:00",
+        "date_format": "%Y-%m-%d %H:%M:%S",
+        "datafile": "examples/data/data.csv"
+      },
+      "extra": {
+        "@type": "oeo:OEO_00420006"
+      }
+    }
+  },
+  "has_simulation_connection": [
+    {
+      "id": "conn_pv",
+      "cid": "conn_pv",
+      "declaration_type": "Connection",
+      "source": "pvs",
+      "dest": "buses",
+      "attr_pairs": [
+        [
+          "P[MW]",
+          "P_gen[MW]"
+        ]
+      ],
+      "settings": {
+        "time_shifted": false
+      },
+      "relation": {
+        "declaration_type": "OneToOneRelation",
+        "extra": {
+          "@type": "OneToOneRelation"
+        }
+      },
+      "extra": {
+        "relation": {
+          "$type": "OneToOneRelation",
+          "@type": "OneToOneRelation"
+        },
+        "@type": "oeo:OEO_0042XXXX-simulation_connection"
+      }
+    },
+    {
+      "id": "conn_vm",
+      "cid": "conn_vm",
+      "declaration_type": "Connection",
+      "source": "buses",
+      "dest": "pv_ctrl",
+      "attr_pairs": [
+        [
+          "Vm[pu]",
+          "Vm[pu]"
+        ]
+      ],
+      "settings": {
+        "time_shifted": false
+      },
+      "relation": {
+        "declaration_type": "OneToOneRelation",
+        "extra": {
+          "@type": "OneToOneRelation"
+        }
+      },
+      "extra": {
+        "relation": {
+          "$type": "OneToOneRelation",
+          "@type": "OneToOneRelation"
+        },
+        "@type": "oeo:OEO_0042XXXX-simulation_connection"
+      }
+    },
+    {
+      "id": "conn_pv_ctrl",
+      "cid": "conn_pv_ctrl",
+      "declaration_type": "Connection",
+      "source": "pv_ctrl",
+      "dest": "pvs",
+      "attr_pairs": [
+        [
+          "power[MW]",
+          "max_power[MW]"
+        ]
+      ],
+      "settings": {
+        "time_shifted": true,
+        "initial_data": {
+          "power[MW]": 0
+        }
+      },
+      "relation": {
+        "declaration_type": "Composition",
+        "rels": [
+          [
+            "backwards",
+            "conn_vm"
+          ],
+          [
+            "backwards",
+            "conn_pv"
+          ]
+        ],
+        "extra": {
+          "@type": "Composition"
+        }
+      },
+      "extra": {
+        "relation": {
+          "$type": "Composition",
+          "rels": [
+            [
+              "backwards",
+              "conn_vm"
+            ],
+            [
+              "backwards",
+              "conn_pv"
+            ]
+          ],
+          "@type": "Composition"
+        },
+        "@type": "oeo:OEO_0042XXXX-simulation_connection"
+      }
+    },
+    {
+      "id": "conn_pv_log",
+      "cid": "conn_pv_log",
+      "declaration_type": "Connection",
+      "source": "pvs",
+      "dest": "csv_writer",
+      "attr_pairs": [
+        [
+          "P[MW]",
+          "P_gen[MW]"
+        ]
+      ],
+      "settings": {
+        "time_shifted": false
+      },
+      "relation": {
+        "declaration_type": "ManyToOneRelation",
+        "extra": {
+          "@type": "ManyToOneRelation"
+        }
+      },
+      "extra": {
+        "relation": {
+          "$type": "ManyToOneRelation",
+          "@type": "ManyToOneRelation"
+        },
+        "@type": "oeo:OEO_0042XXXX-simulation_connection"
+      }
+    },
+    {
+      "id": "conn_bus_log",
+      "cid": "conn_bus_log",
+      "declaration_type": "Connection",
+      "source": "buses",
+      "dest": "csv_writer",
+      "attr_pairs": [
+        [
+          "Vm[pu]",
+          "Vm[pu]"
+        ]
+      ],
+      "settings": {
+        "time_shifted": false
+      },
+      "relation": {
+        "declaration_type": "ManyToOneRelation",
+        "extra": {
+          "@type": "ManyToOneRelation"
+        }
+      },
+      "extra": {
+        "relation": {
+          "$type": "ManyToOneRelation",
+          "@type": "ManyToOneRelation"
+        },
+        "@type": "oeo:OEO_0042XXXX-simulation_connection"
+      }
+    },
+    {
+      "id": "conn_ctrl_log",
+      "cid": "conn_ctrl_log",
+      "declaration_type": "Connection",
+      "source": "pv_ctrl",
+      "dest": "csv_writer",
+      "attr_pairs": [
+        [
+          "power[MW]",
+          "power[MW]"
+        ]
+      ],
+      "settings": {
+        "time_shifted": false
+      },
+      "relation": {
+        "declaration_type": "ManyToOneRelation",
+        "extra": {
+          "@type": "ManyToOneRelation"
+        }
+      },
+      "extra": {
+        "relation": {
+          "$type": "ManyToOneRelation",
+          "@type": "ManyToOneRelation"
+        },
+        "@type": "oeo:OEO_0042XXXX-simulation_connection"
+      }
+    },
+    {
+      "id": "conn_weather",
+      "cid": "conn_weather",
+      "declaration_type": "Connection",
+      "source": "weather",
+      "dest": "pvs",
+      "attr_pairs": [
+        [
+          "DNI",
+          "DNI[W/m2]"
+        ]
+      ],
+      "settings": {
+        "time_shifted": false,
+        "initial_data": {}
+      },
+      "relation": {
+        "declaration_type": "OneToOneRelation",
+        "extra": {
+          "@type": "OneToOneRelation"
+        }
+      },
+      "extra": {
+        "relation": {
+          "$type": "OneToOneRelation",
+          "@type": "OneToOneRelation"
+        },
+        "@type": "oeo:OEO_0042XXXX-simulation_connection"
+      }
+    },
+    {
+      "id": "conn_weather_log",
+      "cid": "conn_weather_log",
+      "declaration_type": "Connection",
+      "source": "weather",
+      "dest": "csv_writer",
+      "attr_pairs": [
+        [
+          "DNI",
+          "DNI"
+        ]
+      ],
+      "settings": {
+        "time_shifted": false,
+        "initial_data": {}
+      },
+      "relation": {
+        "declaration_type": "ManyToOneRelation",
+        "extra": {
+          "@type": "ManyToOneRelation"
+        }
+      },
+      "extra": {
+        "relation": {
+          "$type": "ManyToOneRelation",
+          "@type": "ManyToOneRelation"
+        },
+        "@type": "oeo:OEO_0042XXXX-simulation_connection"
+      }
+    }
+  ],
+  "extra": {
+    "@type": "oeo:OEO_00420001"
+  }
+}
