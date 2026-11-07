@@ -1,0 +1,93 @@
+@prefix ext: <https://example.org/oeo-scenario-ext#> .
+@prefix oeo: <https://openenergyplatform.org/ontology/oeo/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://example.org/scenario/pv_bat_ieee13_eot_30> a oeo:OEO_00420001 ;
+    rdfs:label "pv_bat_ieee13_eot_30" ;
+    ext:hasScenarioParameter <https://example.org/scenario/pv_bat_ieee13_eot_30/param/priority>,
+        <https://example.org/scenario/pv_bat_ieee13_eot_30/param/randomSeed>,
+        <https://example.org/scenario/pv_bat_ieee13_eot_30/param/simulationEnd>,
+        <https://example.org/scenario/pv_bat_ieee13_eot_30/param/simulationStart>,
+        <https://example.org/scenario/pv_bat_ieee13_eot_30/param/syncedParticipants> ;
+    oeo:OEO_0042XXXX-has_simulation_connection <https://example.org/scenario/pv_bat_ieee13_eot_30/translator/translatorID> ;
+    oeo:OEO_0042XXXX-simulators <https://example.org/scenario/pv_bat_ieee13_eot_30/Battery>,
+        <https://example.org/scenario/pv_bat_ieee13_eot_30/PV>,
+        <https://example.org/scenario/pv_bat_ieee13_eot_30/PW1> .
+
+<https://example.org/scenario/pv_bat_ieee13_eot_30/Battery> a oeo:OEO_00420006 ;
+    rdfs:label "Battery" ;
+    ext:domain "energy"^^xsd:string ;
+    ext:isExternal false ;
+    ext:layer "Battery"^^xsd:string ;
+    ext:stepLength 15.0 ;
+    ext:synchronized true ;
+    ext:wrapperType "liionpackWrapper"^^xsd:string ;
+    oeo:OEO_0042XXXX-init_Params "{\"bus\": \"Bus 634\", \"slack\": \"Grid_115kV\", \"soc\": \"0.5\"}" .
+
+<https://example.org/scenario/pv_bat_ieee13_eot_30/PV> a oeo:OEO_00420006 ;
+    rdfs:label "PV" ;
+    ext:domain "energy"^^xsd:string ;
+    ext:isExternal false ;
+    ext:layer "PV"^^xsd:string ;
+    ext:stepLength 5.0 ;
+    ext:synchronized true ;
+    ext:wrapperType "pvlibWrapper"^^xsd:string ;
+    oeo:OEO_0042XXXX-init_Params "{\"bus\": \"Bus 680\", \"end_time\": \"2025-05-01 10:00\", \"start_time\": \"2025-05-01 09:00\"}" .
+
+<https://example.org/scenario/pv_bat_ieee13_eot_30/PW1> a oeo:OEO_00420006 ;
+    rdfs:label "PW1" ;
+    ext:domain "energy"^^xsd:string ;
+    ext:isExternal false ;
+    ext:layer "Bus"^^xsd:string ;
+    ext:stepLength 15.0 ;
+    ext:synchronized true ;
+    ext:wrapperType "pandapowerWrapper"^^xsd:string ;
+    oeo:OEO_0042XXXX-has_connection_port <https://example.org/scenario/pv_bat_ieee13_eot_30/PW1/port/0> ;
+    oeo:OEO_0042XXXX-init_Params "{\"copy_buses\": \"Bus 634, Bus 680\", \"three_phase\": \"false\"}" .
+
+<https://example.org/scenario/pv_bat_ieee13_eot_30/PW1/port/0> a oeo:OEO_0042XXXX-simulation_connection_output_port ;
+    ext:observer_element "bus" ;
+    ext:observer_filter "Grid_115kV" ;
+    ext:observer_period 1 ;
+    ext:observer_task "publish" ;
+    ext:observer_type "avro" ;
+    oeo:OEO_0042XXXX-has_simulation_connection <https://example.org/scenario/pv_bat_ieee13_eot_30/translator/translatorID> .
+
+<https://example.org/scenario/pv_bat_ieee13_eot_30/entity/Bus%20634> a oeo:ont00000995 ;
+    rdfs:label "Bus 634" .
+
+<https://example.org/scenario/pv_bat_ieee13_eot_30/entity/Bus%20680> a oeo:ont00000995 ;
+    rdfs:label "Bus 680" .
+
+<https://example.org/scenario/pv_bat_ieee13_eot_30/entity/Grid_115kV> a oeo:ont00000995 ;
+    rdfs:label "Grid_115kV" .
+
+<https://example.org/scenario/pv_bat_ieee13_eot_30/param/priority> a oeo:OEO_0042XXXX-scenario_parameter ;
+    ext:name "priority" ;
+    ext:value 0 .
+
+<https://example.org/scenario/pv_bat_ieee13_eot_30/param/randomSeed> a oeo:OEO_0042XXXX-scenario_parameter ;
+    ext:name "randomSeed" ;
+    ext:value 23 .
+
+<https://example.org/scenario/pv_bat_ieee13_eot_30/param/simulationEnd> a oeo:OEO_0042XXXX-scenario_parameter ;
+    ext:name "simulationEnd" ;
+    ext:value 60 .
+
+<https://example.org/scenario/pv_bat_ieee13_eot_30/param/simulationStart> a oeo:OEO_0042XXXX-scenario_parameter ;
+    ext:name "simulationStart" ;
+    ext:value 0 .
+
+<https://example.org/scenario/pv_bat_ieee13_eot_30/param/syncedParticipants> a oeo:OEO_0042XXXX-scenario_parameter ;
+    ext:name "syncedParticipants" ;
+    ext:value 4 .
+
+<https://example.org/scenario/pv_bat_ieee13_eot_30/translator/translatorID> a oeo:OEO_0042XXXX-simulation_connection ;
+    rdfs:label "translatorID" ;
+    ext:connectionKind "translator" ;
+    ext:responsibilityA <https://example.org/scenario/pv_bat_ieee13_eot_30/entity/Bus%20634>,
+        <https://example.org/scenario/pv_bat_ieee13_eot_30/entity/Bus%20680>,
+        <https://example.org/scenario/pv_bat_ieee13_eot_30/entity/Grid_115kV> ;
+    ext:wrapperType "energy_ontology_transformer" .
+

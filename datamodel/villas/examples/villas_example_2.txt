@@ -1,0 +1,146 @@
+                                                                        # Simulation Configuration
+nodes = {
+    rtds_ss1 = {                                                        # Simulation Component
+        type = "socket"                                                 # Simulation Component Parameter
+        layer = "udp"                                                   # Simulation Component Parameter
+        format = {                                                      # Message Schema
+            type = "gtnet"
+            fake = true
+        }
+
+        in = { # Local address, i.e. address of villas instance         # Simulation Connection Input Port
+            address = "134.130.169.31:12000"                            # ???
+
+            signals = (                                                 # Message Schema
+                { name="trigger", type="integer" },                     # Message Attribute
+                { name="if1_tx_phA_dp0_mag",   type="float" },          # Message Attribute
+                { name="if1_tx_phA_dp0_phase", type="float" },          # Message Attribute
+                { name="if1_tx_phA_dp1_mag",   type="float" },          # Message Attribute
+                { name="if1_tx_phA_dp1_phase", type="float" },          # Message Attribute
+                { name="if1_tx_phA_dp2_mag",   type="float" },          # Message Attribute
+                { name="if1_tx_phA_dp2_phase", type="float" },          # Message Attribute
+                { name="if1_tx_phA_dp3_mag",   type="float" },          # Message Attribute
+                { name="if1_tx_phA_dp3_phase", type="float" },          # Message Attribute
+                { name="if1_tx_phB_dp0_mag",   type="float" },          # Message Attribute
+                { name="if1_tx_phB_dp0_phase", type="float" },          # Message Attribute
+                { name="if1_tx_phB_dp1_mag",   type="float" },          # Message Attribute
+                { name="if1_tx_phB_dp1_phase", type="float" },          # Message Attribute
+                { name="if1_tx_phB_dp2_mag",   type="float" },          # Message Attribute
+                { name="if1_tx_phB_dp2_phase", type="float" },          # Message Attribute
+                { name="if1_tx_phB_dp3_mag",   type="float" },          # Message Attribute
+                { name="if1_tx_phB_dp3_phase", type="float" },          # Message Attribute
+                { name="if1_tx_phC_dp0_mag",   type="float" },          # Message Attribute
+                { name="if1_tx_phC_dp0_phase", type="float" },          # Message Attribute
+                { name="if1_tx_phC_dp1_mag",   type="float" },          # Message Attribute
+                { name="if1_tx_phC_dp1_phase", type="float" },          # Message Attribute
+                { name="if1_tx_phC_dp2_mag",   type="float" },          # Message Attribute
+                { name="if1_tx_phC_dp2_phase", type="float" },          # Message Attribute
+                { name="if1_tx_phC_dp3_mag",   type="float" },          # Message Attribute
+                { name="if1_tx_phC_dp3_phase", type="float" }           # Message Attribute
+            )
+        }
+
+        out = { # Remote address, i.e. address of GTNET card            # Simulation Connection Output Port
+            address = "134.130.169.97:12000" # GTNET#4 -> Rack5(GPC4)   # ???
+        }
+    }
+
+    rtds_ss2 = {                                                        # Simulation Component
+        type = "socket"                                                 # Simulation Component Parameter
+        layer = "udp"                                                   # Simulation Component Parameter
+        format = {                                                      # Message Schema
+            type = "gtnet"
+            fake = true
+        }
+
+        in = {                                                          # Simulation Connection Input Port
+             # Local address, i.e. address of villas instance
+            address = "134.130.169.31:12001"                            # ???
+
+            signals = (                                                 # Message Schema
+                { name="trigger", type="integer" },
+                { name="if1_tx_phA_dp0_mag",   type="float" },          # Message Attribute
+                { name="if1_tx_phA_dp0_phase", type="float" },          # Message Attribute
+                { name="if1_tx_phA_dp1_mag",   type="float" },          # Message Attribute
+                { name="if1_tx_phA_dp1_phase", type="float" },          # Message Attribute
+                { name="if1_tx_phA_dp2_mag",   type="float" },          # Message Attribute
+                { name="if1_tx_phA_dp2_phase", type="float" },          # Message Attribute
+                { name="if1_tx_phA_dp3_mag",   type="float" },          # Message Attribute
+                { name="if1_tx_phA_dp3_phase", type="float" },          # Message Attribute
+                { name="if1_tx_phB_dp0_mag",   type="float" },          # Message Attribute
+                { name="if1_tx_phB_dp0_phase", type="float" },          # Message Attribute
+                { name="if1_tx_phB_dp1_mag",   type="float" },          # Message Attribute
+                { name="if1_tx_phB_dp1_phase", type="float" },          # Message Attribute
+                { name="if1_tx_phB_dp2_mag",   type="float" },          # Message Attribute
+                { name="if1_tx_phB_dp2_phase", type="float" },          # Message Attribute
+                { name="if1_tx_phB_dp3_mag",   type="float" },          # Message Attribute
+                { name="if1_tx_phB_dp3_phase", type="float" },          # Message Attribute
+                { name="if1_tx_phC_dp0_mag",   type="float" },          # Message Attribute
+                { name="if1_tx_phC_dp0_phase", type="float" },          # Message Attribute
+                { name="if1_tx_phC_dp1_mag",   type="float" },          # Message Attribute
+                { name="if1_tx_phC_dp1_phase", type="float" },          # Message Attribute
+                { name="if1_tx_phC_dp2_mag",   type="float" },          # Message Attribute
+                { name="if1_tx_phC_dp2_phase", type="float" },          # Message Attribute
+                { name="if1_tx_phC_dp3_mag",   type="float" },          # Message Attribute
+                { name="if1_tx_phC_dp3_phase", type="float" }           # Message Attribute
+            )
+        }
+
+        out = {                                                         # Simulation Connection Output Port
+            # Remote address, i.e. address of GTNET card
+            address = "134.130.169.98:12000" # GTNET#5 -> Rack1(GPC4)   # ???
+        }
+    }
+
+    rtds_ss1_monitoring = {                                             # Simulation Component
+        type = "socket"                                                 # Simulation Component Parameter
+        layer = "udp"                                                   # Simulation Component Parameter
+        format = {                                                      # Message Schema
+            type = "gtnet"
+            fake = true
+        }
+
+        in = { # Local address, i.e. address of villas instance         # Simulation Connection Input Port
+            address = "134.130.169.31:12002"                            # ???
+
+            signals = (                                                 # Message Schema
+                { name="orgn_V3phRMSintrf", type="float", unit="V"},    # Message Attribute
+                { name="orgn_Pintrf", type="float", unit="W"   },       # Message Attribute
+                { name="orgn_Qintrf", type="float", unit="Var" },       # Message Attribute
+                { name="orgn_Sintrf", type="float", unit="VA"  },       # Message Attribute
+                { name="if1_V3phRMS", type="float", unit="V"   },       # Message Attribute
+                { name="if1_I3phRMS", type="float", unit="A"   },       # Message Attribute
+                { name="if1_P",       type="float", unit="W"   },       # Message Attribute
+                { name="if1_Q",       type="float", unit="Var" },       # Message Attribute
+                { name="if1_S",       type="float", unit="VA"  }        # Message Attribute
+            )
+        }
+
+        out = { # Remote address, i.e. address of GTNET card            # Simulation Connection Output Port
+            address = "134.130.169.97:12000"                            # ???
+        }
+    }
+
+
+    web_monitoring = {                                                  # Simulation Component
+        type = "websocket"                                              # Simulation Component Parameter
+
+        destinations = [                                                # Simulation Connection
+            "https://villas.k8s.eonerc.rwth-aachen.de//ws/relay/lab17"  # Simulation Connection Port
+        ]
+    }
+}
+
+paths = (
+    {                                                                   # Simulation Connection
+        in = "rtds_ss1"                                                 # Simulation Connection Port
+        out = "rtds_ss2"                                                # Simulation Connection Port
+        reverse = true                                                  # ???
+    },
+    {                                                                   # Simulation Connection
+        enabled = false                                                 # ???
+        in = "rtds_ss1_monitoring"                                      # Simulation Connection Port
+        out = "web_monitoring"                                          # Simulation Connection Port
+        reverse = true                                                  # ???
+    }
+)

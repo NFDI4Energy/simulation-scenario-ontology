@@ -1,0 +1,62 @@
+                                                                            # Simulation Configuration
+http = {                                                                    # Simulation Parameter 
+    enabled: true,
+    port: 8080
+}
+
+nodes = {                                                                         
+
+    webrtc_siggen = {                                                       # Simulation Component
+
+        type = "webrtc",                                                    # Simulation Component Parameter  
+                                                                                  
+        format = "json"                                                     # Message Schema
+
+        in = {                                                              # Simulation Connection Input Port
+            signals = (                                                     # Message Schema
+                { name = "signal", type = "float", unit = "unit" },         # Message Attribute
+                { name = "signal", type = "float", unit = "unit" },         # Message Attribute
+                { name = "signal", type = "float", unit = "unit" }          # Message Attribute
+            )
+        }
+
+        out = {                                                             # Simulation Connection Output Port
+            signals = (                                                     # Message Schema
+                { name = "signal", type = "float", unit = "unit" },         # Message Attribute
+                { name = "signal", type = "float", unit = "unit" },         # Message Attribute
+                { name = "signal", type = "float", unit = "unit" }          # Message Attribute
+            )
+        }
+
+        session = "villas-test"                                             # Simulation Component Parameter
+        server = "https://villas.k8s.eonerc.rwth-aachen.de/ws/signaling"    # Simulation Component Parameter
+        max_retransmits = 0                                                 # Simulation Component Parameter
+        wait_seconds = 10                                                   # Simulation Component Parameter
+        ordered = false                                                     # Simulation Component Parameter
+        ice = {                                                             # Simulation Component Parameter
+            servers = ( )
+        }
+    }
+
+    siggen = {                                                              # Simulation Component
+        type = "signal"                                                     # Simulation Component Parameter
+        signal = [ "sine", "pulse", "square" ]                              # Simulation Component Parameter
+        values = 3                                                          # Simulation Component Parameter 
+        limit = 1                                                           # Simulation Component Parameter 
+        rate = 1                                                            # Simulation Component Parameter 
+    }
+}
+
+paths = (
+    {                                                                       # Simulation Connection
+        in = "siggen"                                                       # Simulation Connection Port
+        out = "webrtc_siggen"                                               # Simulation Connection Port
+
+        hooks = ( "print" )                                                 # Message Modification
+    },
+    {                                                                       # Simulation Connection
+        in = "webrtc_siggen"                                                # Simulation Connection Port
+
+        hooks = ( "print" )                                                 # Message Modification
+    }
+)

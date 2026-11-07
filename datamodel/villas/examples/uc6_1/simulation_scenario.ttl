@@ -1,0 +1,227 @@
+@prefix bfo: <http://purl.obolibrary.org/obo/>
+@prefix datatype: <http://qudt.org/vocab/datatype/>
+@prefix dcterms: <http://purl.org/dc/terms/>
+@prefix oeo: <https://openenergyplatform.org/ontology/oeo/>
+@prefix qudt: <http://qudt.org/schema/qudt/>
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+@prefix unit: <http://qudt.org/vocab/unit/>
+
+@prefix ex: <https://example.com/>
+
+@prefix extra: <https://example.com/extra/>
+
+
+# Component #1 RSCAD Grid Sim
+_:component1    rdf:type oeo:OEO_SIMULATION_COMPONENT ;
+                dcterms:title "RSCAD Grid Model" ;
+                bfo:BFO_HAS_QUALITY (
+                    _:component1_inPort1
+                ) .
+
+_:component1_inPort1    rdf:type oeo:OEO_SIMULATION_CONNECTION_INPUT_PORT ;
+                        bfo:BFO_HAS_PART [
+                            rdf:type oeo:OEO_MESSAGE_SCHEMA ;
+                            bfo:BFO_HAS_PART (
+                                [
+                                    rdf:type oeo:OEO_MESSAGE_ATTRIBUTE ;
+                                    dcterms:title "charger load rms active power L1" ;
+                                    qudt:datatype datatype:FLOAT-SP ;
+                                    qudt:hasUnit unit:W .
+                                ]
+                                [
+                                    rdf:type oeo:OEO_MESSAGE_ATTRIBUTE ;
+                                    dcterms:title "charger load rms reactive power L1" ;
+                                    qudt:datatype datatype:FLOAT-SP ;
+                                    qudt:hasUnit unit:VAR .
+                                ]
+                                [
+                                    rdf:type oeo:OEO_MESSAGE_ATTRIBUTE ;
+                                    dcterms:title "charger load rms active power L2" ;
+                                    qudt:datatype datatype:FLOAT-SP ;
+                                    qudt:hasUnit unit:W .
+                                ]
+                                [
+                                    rdf:type oeo:OEO_MESSAGE_ATTRIBUTE ;
+                                    dcterms:title "charger load rms reactive power L2" ;
+                                    qudt:datatype datatype:FLOAT-SP ;
+                                    qudt:hasUnit unit:VAR .
+                                ]
+                                [
+                                    rdf:type oeo:OEO_MESSAGE_ATTRIBUTE ;
+                                    dcterms:title "charger load rms active power L3" ;
+                                    qudt:datatype datatype:FLOAT-SP ;
+                                    qudt:hasUnit unit:W .
+                                ]
+                                [
+                                    rdf:type oeo:OEO_MESSAGE_ATTRIBUTE ;
+                                    dcterms:title "charger load rms reactive power L3" ;
+                                    qudt:datatype datatype:FLOAT-SP ;
+                                    qudt:hasUnit unit:VAR .
+                                ]
+                                [
+                                    rdf:type oeo:OEO_MESSAGE_ATTRIBUTE ;
+                                    dcterms:title "pv generation rms active power 3P" ;
+                                    qudt:datatype datatype:FLOAT-SP ;
+                                    qudt:hasUnit unit:W .
+                                ]
+                                [
+                                    rdf:type oeo:OEO_MESSAGE_ATTRIBUTE ;
+                                    dcterms:title "pv generation rms reactive power 3P" ;
+                                    qudt:datatype datatype:FLOAT-SP ;
+                                    qudt:hasUnit unit:VAR .
+                                ]
+                                [
+                                    rdf:type oeo:OEO_MESSAGE_ATTRIBUTE ;
+                                    dcterms:title "building generation rms active power 3P" ;
+                                    qudt:datatype datatype:FLOAT-SP ;
+                                    qudt:hasUnit unit:W .
+                                ]
+                                [
+                                    rdf:type oeo:OEO_MESSAGE_ATTRIBUTE ;
+                                    dcterms:title "building generation rms reactive power 3P" ;
+                                    qudt:datatype datatype:FLOAT-SP ;
+                                    qudt:hasUnit unit:VAR .
+                                ]
+                                [
+                                    rdf:type oeo:OEO_MESSAGE_ATTRIBUTE ;
+                                    dcterms:title "building load rms active power 3P" ;
+                                    qudt:datatype datatype:FLOAT-SP ;
+                                    qudt:hasUnit unit:W .
+                                ]
+                                [
+                                    rdf:type oeo:OEO_MESSAGE_ATTRIBUTE ;
+                                    dcterms:title "building load rms reactive power 3P" ;
+                                    qudt:datatype datatype:FLOAT-SP ;
+                                    qudt:hasUnit unit:VAR .
+                                ]
+                            ) .
+                        ] .
+
+# Component #2 Charger PQ Setpoints
+_:component2    rdf:type oeo:OEO_SIMULATION_COMPONENT ;
+                dcterms:title "Charger PQ Setpoint" ;
+                bfo:BFO_HAS_QUALITY (
+                    _:component2_outPort1
+                ) .
+
+_:component2_outPort1   rdf:type oeo:OEO_SIMULATION_CONNECTION_OUTPUT_PORT ;
+                        bfo:BFO_HAS_PART [
+                            rdf:type oeo:OEO_MESSAGE_SCHEMA ;
+                            bfo:BFO_HAS_PART (
+                                [
+                                    rdf:type oeo:OEO_MESSAGE_ATTRIBUTE ;
+                                    dcterms:title "charger load rms active power 3P" ;
+                                    qudt:datatype datatype:FLOAT-SP ;
+                                    qudt:hasUnit unit:W .
+                                ]
+                                [
+                                    rdf:type oeo:OEO_MESSAGE_ATTRIBUTE ;
+                                    dcterms:title "charger load rms reactive power 3P" ;
+                                    qudt:datatype datatype:FLOAT-SP ;
+                                    qudt:hasUnit unit:VAR .
+                                ]
+                            ) .
+                        ] .
+
+# Component #3 Charger Voltage Source
+_:component3    rdf:type oeo:OEO_HARDWARE_SIMULATION_COMPONENT ;
+                dcterms:title "Charger Hardware Voltage Source" ;
+                bfo:BFO_HAS_QUALITY (
+                    _:component3_outPort1
+                ) .
+
+_:component3_outPort1   rdf:type oeo:OEO_SIMULATION_CONNECTION_OUTPUT_PORT ;
+                        extra:sendingAddress "172.21.63.222:12201" ;
+                        bfo:BFO_HAS_PART [
+                            rdf:type oeo:OEO_MESSAGE_SCHEMA ;
+                            bfo:BFO_HAS_PART (
+                                [
+                                    rdf:type oeo:OEO_MESSAGE_ATTRIBUTE ;
+                                    dcterms:title "charger load rms active power L1" ;
+                                    qudt:datatype datatype:FLOAT-SP ;
+                                    qudt:hasUnit unit:W .
+                                ]
+                                [
+                                    rdf:type oeo:OEO_MESSAGE_ATTRIBUTE ;
+                                    dcterms:title "charger load rms reactive power L1" ;
+                                    qudt:datatype datatype:FLOAT-SP ;
+                                    qudt:hasUnit unit:VAR .
+                                ]
+                                [
+                                    rdf:type oeo:OEO_MESSAGE_ATTRIBUTE ;
+                                    dcterms:title "charger load rms active power L2" ;
+                                    qudt:datatype datatype:FLOAT-SP ;
+                                    qudt:hasUnit unit:W .
+                                ]
+                                [
+                                    rdf:type oeo:OEO_MESSAGE_ATTRIBUTE ;
+                                    dcterms:title "charger load rms reactive power L2" ;
+                                    qudt:datatype datatype:FLOAT-SP ;
+                                    qudt:hasUnit unit:VAR .
+                                ]
+                                [
+                                    rdf:type oeo:OEO_MESSAGE_ATTRIBUTE ;
+                                    dcterms:title "charger load rms active power L3" ;
+                                    qudt:datatype datatype:FLOAT-SP ;
+                                    qudt:hasUnit unit:W .
+                                ]
+                                [
+                                    rdf:type oeo:OEO_MESSAGE_ATTRIBUTE ;
+                                    dcterms:title "charger load rms reactive power L3" ;
+                                    qudt:datatype datatype:FLOAT-SP ;
+                                    qudt:hasUnit unit:VAR .
+                                ]
+                            ) .
+                        ] .
+
+# Component #4 Charger Current Source
+_:component4    rdf:type oeo:OEO_HARDWARE_SIMULATION_COMPONENT ;
+                dcterms:title "Charger Hardware Current Source" ;
+                bfo:BFO_HAS_QUALITY (
+                    _:component4_inPort1
+                ) .
+
+_:component4_inPort1    rdf:type oeo:OEO_SIMULATION_CONNECTION_INPUT_PORT ;
+                        extra:receivingAddress "172.21.63.207:12201" ;
+                        bfo:BFO_HAS_PART [
+                            rdf:type oeo:OEO_MESSAGE_SCHEMA ;
+                            bfo:BFO_HAS_PART (
+                                [
+                                    rdf:type oeo:OEO_MESSAGE_ATTRIBUTE ;
+                                    dcterms:title "charger load rms active power 3P" ;
+                                    qudt:datatype datatype:FLOAT-SP ;
+                                    qudt:hasUnit unit:W .
+                                ]
+                                [
+                                    rdf:type oeo:OEO_MESSAGE_ATTRIBUTE ;
+                                    dcterms:title "charger load rms reactive power 3P" ;
+                                    qudt:datatype datatype:FLOAT-SP ;
+                                    qudt:hasUnit unit:VAR .
+                                ]
+                            ) .
+                        ] .
+
+[] rdf:type oeo:OEO_SIMULATION_PLAN_SPECIFICATION ;
+    ex:isAbout "Investigation of the voltage stability in low voltage grids under the influence of car charging infrastructure with and without tap-changing transformers" ;
+
+    bfo:BFO_HAS_PART [
+        rdf:type oeo:OEO_SIMULATION_CONFIGURATION ;
+        bfo:BFO_HAS_PART (
+            [
+                rdf:type oeo:OEO_OUTPUT_DATA_CREATION_OBJECTIVE .
+            ],
+            [
+                
+            ],
+            [
+                rdf:type oeo:OEO_HARDWARE_SIMULATION_COMPONENT ;
+                dcterms:title "RSCAD Charger Current Source" ;
+
+            ],
+            [
+                rdf:type oeo:OEO_HARDWARE_SIMULATION_COMPONENT ;
+                dcterms:title "PSCAD Charger Voltage Source"
+            ]
+        ) .
+    ] .
